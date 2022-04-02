@@ -25,7 +25,7 @@ SECRET_KEY = '+(d5!og6a0nxyh5#75f%#5z^=t)$#lqa#i1141py8!jul!s9ok'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','varshneybook.herokuapp.com']
 
 
 # Application definition
