@@ -1,0 +1,209 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+
+{% block content %}
+
+
+
+
+
+ <!-- feeds content -->
+      <div class="feeds-content dark-mode-2">
+        <div class="feeds-header dark-mode-1">
+          <div class="header-top border">
+            <h4 class="light-text">Direct</h4>
+            
+          </div>
+
+
+         
+
+
+         
+
+
+
+        
+            
+       
+        <div style="display: flex; flex-direction: column; box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3); height: 40rem; overflow-y: scroll;  " id="myDiv" class="posts dark-mode-1">
+           {% for direct in directs %}
+          <div style="box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3);" class="post border">
+         
+            <div class="user-avatar">
+             {% if direct.sender.profile.picture %}
+                  <img src="{{ direct.sender.profile.picture.url }}" />
+                {% else %}
+                  <img src="{% static 'images/icon.12.png' %}" />
+                {% endif %}
+            </div>
+            <div class="post-content">
+              <div class="post-user-info light-text">
+                <h4>{{ direct.sender.profile.first_name }} {{ direct.sender.profile.last_name }}</h4>
+               
+                <span><a style="text-decoration: none; color: #00adb3" href="{% url 'profile' direct.sender.username %}" >@{{ direct.sender.username }} </a>{{ direct.date|date:'N d G:i' }}</span>
+              </div>
+              <p class="post-text light-text">
+               {{ direct.body }}
+              </p>
+            
+            </div>
+
+            <script>
+              var myDiv = document.getElementById("myDiv");
+              myDiv.scrollTop = myDiv.scrollHeight;
+              $("#mydiv").scrollTop($("#mydiv")[0].scrollHeight);
+            </script>
+           
+         
+            
+          </div>
+           
+           {% endfor %}
+
+          
+         
+        </div>
+
+
+
+
+  <div style=" box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3); overflow-y: scroll; max-height: 45rem " class="follow dark-mode-1">
+           <h3 class="follow-heading light-text border">Conversations: </h3>
+          
+           {% for message in messages %}
+           <div class="{% if active_direct == message.user.username %}is-active{% endif %}">
+           <a    href="{% url 'directs' message.user.username %}">
+          <div style="box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3)" class="follow-user border">
+            <div class="follow-user-img">
+             {% if message.user.profile.picture %}
+                  <img src="{{ message.user.profile.picture.url }}" />
+                {% else %}
+                  <img src="{% static 'images/icon.12.png' %}" />
+                {% endif %}
+            </div>
+            <div class="follow-user-info light-text">
+              <h4>{{ message.user.profile.first_name }} {{ message.user.profile.last_name }}</h4> 
+              <h4>@{{ message.user.username }}</h4>
+
+              <div class="unread">
+              {% if message.unread %}
+              <h1><i class="fas fa-comment-dots"></i> {{ message.unread }}</h1>
+              {% endif %}
+
+              <style>
+                .unread i, h1{
+                  color: #FF5A5F;
+                }
+              </style>
+              </div>
+             
+            </div>
+          </div>
+          
+         </a>
+
+           <style>
+            a{
+              text-decoration: none; 
+              color: black;
+            }
+
+            .is-active{
+              background-color: #008489 !important;
+            }
+
+            .is-active a{
+              color: white;
+            }
+         </style>
+         </div>
+         {% endfor %}
+
+       
+        </div>
+
+        <div style="height: 12.5rem" class="caption"> 
+   
+
+
+ 
+ 
+    <form method="post" action="{% url 'send_direct' %}" role="form">
+    {% csrf_token %}    
+     <input type="hidden" name="to_user" value="{{ active_direct }}">      
+           <textarea
+            class="dark-mode-2 light-text border"
+              type="text" 
+              name="body" 
+              id="id_body" 
+              placeholder="Type your message....." 
+              maxlength=1500></textarea>
+      <div class="comment-btn">
+            <button type="submit" name="action" >
+              <h4><i class="fas fa-paper-plane"></i></h4>
+            </button>
+        </div>
+
+        <style> 
+
+              .comment-btn {
+                position: absolute; 
+                padding: 1px 1px;
+                display: flex; 
+                justify-content:center; 
+                align-items: center; 
+                margin-left: 56rem; 
+                margin-top: -4.5rem;
+                
+
+              }
+              .comment-btn button{
+                background-color: #008489;
+                height: 3.2rem;
+                width: 3.2rem;
+                cursor: pointer;
+                border-radius: 3rem;
+                borrder: none; 
+                border: 0.1rem  #eee;
+                box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3);
+              }
+              .comment-btn i{
+                color: white;
+              }
+              textarea {
+                position: relative;
+                margin-top: 0.2rem;
+                margin-left: 0rem;
+                width: 60rem;
+                height: 12rem;
+                padding: 12px 20px;
+                box-sizing: border-box;
+                border: 0.1rem  #eee;
+	              
+	              background-color: #d6e1e9;
+                font-size: 16px;
+                resize: none;
+                box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3);
+              }
+              textarea:focus{
+               background-color: #fff;
+               border: 0.1rem solid #00adb3;
+              }
+         </style>  
+        
+   
+</form>
+  </div>
+</div>
+
+
+</div>
+
+      
+      <!-- end of feeds content -->
+             
+
+
+{% endblock %}

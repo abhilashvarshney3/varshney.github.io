@@ -1,0 +1,282 @@
+{% load static %} 
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href=" {% static './images/icon.12.png' %} " />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700&display=swap"
+      rel="stylesheet"
+    />
+      <script src=
+        "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+      </script>
+  
+
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}" />
+    <title>Airbnb | Galleria</title>
+  </head>
+  <body>
+    
+
+    <!-- feeds page -->
+    <section class="feeds-page">
+      <!-- feeds nav -->
+      <nav class="feeds-nav dark-mode-1">
+      <div class="brand-icon">
+      <a onclick="myFunction()" class="brand"><i class="fab fa-airbnb"></i></a>
+       <script>
+            function myFunction() {
+            location.reload();
+            }
+          </script>
+      </div>
+        <div class="icons">
+
+         
+          
+          <a class="tooltip" href="{% url 'index' %}" class="active">
+          <i class="fas fa-home">
+          <span class="tooltiptext">Home</span>
+          </i></a>
+
+          <a class="tooltip" href="{% url 'show-notifications' %}" class="active">
+           <div style="margin-left: 3rem; margin-top: -1rem; color: #FF5A5F; position: absolute">
+          {% if count_notifications %}
+          <h5>{{ count_notifications }}</h5>
+          {% endif %}
+          </div>
+          <i class="far fa-bell">
+          <span class="tooltiptext">Notifications</span>
+          </i></a>
+
+          <a class="tooltip" href="{% url 'newpost' %}">
+          <i class="fas fa-upload">
+           <span class="tooltiptext">Upload Post</span>
+          </i> </a>
+
+          <a class="tooltip" href="{% url 'inbox' %}">
+          <div style="margin-left: 3rem; margin-top: -1rem; color: #FF5A5F; position: absolute">
+          {% if directs_count %}
+          <h5>{{ directs_count }}</h5>
+          {% endif %}
+          </div>
+          <i class="far fa-envelope">
+          
+           <span class="tooltiptext">Inbox</span>
+           </i></a>
+
+
+           <style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 15rem;
+  background-color: #008489;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 5px;
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+</style>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <form action="{% url 'search' %}" method="get" class="search-bar">
+        <div class="search-bar">
+         <button type="submit" value="query" name="search" >
+          <i class="fas fa-search"></i>
+           </button>
+          <input
+            type="text"
+            name="query" id="query"
+            placeholder="Search tags, posts, users"
+            class="search-bar-input dark-mode-2 light-text border"
+          />
+         
+          </form>
+        </div>
+        <div class="user">
+         <!--<div class="user-img-wrapper">
+          
+             {% if profile.picture %}
+              <img src="{{ request.profile.picture.url }}" />
+              {% else %}
+              <img src="{% static 'images/icon.12.png' %}" />
+            {% endif %} 
+          </div>-->
+          
+          <a href="#" class="user-link light-text">@{{ request.user }}</a>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </nav>
+      <!-- end of feeds nav -->
+
+      
+
+
+        {% block content %}
+       
+        {% endblock  %}
+
+
+        {% block pagination %}
+       
+        {% endblock  %}
+       
+     
+
+        
+      <!-- end of feeds content -->
+
+   <button type="button" class="post-btn">
+        <i class="fab fa-airbnb"></i>&nbsp; Post
+      </button>
+
+      
+
+ <!-- post modal -->
+      <div class="modal-wrapper">
+        <div class="modal dark-mode-1">
+          <div class="modal-header border">
+            <i class="fas fa-times"></i>
+            <button type="submit" name="action">Post</button>
+          </div>
+            <div class="modal-body">
+
+
+
+
+
+            
+
+
+             <div class="modal-img">
+              <img src="images/user1.jpg" />
+            </div>
+            <input
+              type="text"
+              name="caption"
+              placeholder="What's happening?"
+              class="modal-input dark-mode-2 light-text border"
+            />
+            <i class="far fa-smile"></i>
+          </div>
+          <div class="modal-footer">
+           
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end of post modal -->
+
+      <!-- sidebar -->
+      <div class="sidebar-wrapper">
+        <div class="sidebar dark-mode-1">
+          <div class="sidebar-header border">
+            <h2 class="light-text">Quick Links</h2>
+            <i class="fas fa-times"></i>
+          </div>
+          
+          <div class="sidebar-list-1 border">
+            <ul>
+              <li>
+                <a href="{% url 'profile' request.user %}"> <i class="fas fa-user"></i> Profile </a>
+              </li>
+              
+              <li>
+                <a href="{% url 'profilefavorites' request.user %}"> <i class="fas fa-star"></i> Saved </a>
+              </li>
+              <li>
+                <a href="#"> <i class="fas fa-user-plus"></i> Followers </a>
+              </li>
+            
+            </ul>
+          </div>
+          <div class="sidebar-list-2">
+            <ul>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Help</a></li>
+              <li><a href="{% url 'login' %}">Log Out</a></li>
+            </ul>
+          </div>
+
+          <!-- dark mode -->
+          <div class="dark-mode">
+            <p>Dark Mode</p>
+            <div class="toggle">
+              <div class="circle"></div>
+            </div>
+          </div>
+          <!-- end of dark mode -->
+        </div>
+      </div>
+      <!-- end of sidebar -->
+    </section>
+    <!-- end of feeds page -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{% static 'JS/script.js' %}"></script>
+  </body>
+</html>

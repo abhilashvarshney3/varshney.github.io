@@ -1,0 +1,283 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+
+{% block content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+feeds content
+      <div class="feeds-content dark-mode-2">
+        <div class="feeds-header dark-mode-1">
+          <div class="header-top border">
+            <h4 style="margin-left: 5rem" class="light-text">Upload a post</h4>
+          </div>
+          
+      
+       
+          <div class="header-post dark-mode-1 border">
+
+
+          
+
+
+
+
+
+
+  
+            <form method="post" action="" enctype="multipart/form-data" role="form">
+               {% csrf_token %}
+        <div class="posts dark-mode-1">
+        
+         <div class="upload-picture">
+        <h2>Image:</h2>
+         <i class="fas fa-image fa-w-14 fa-2x"></i>
+          <input type="file" name="picture" id="id_picture" class="custom-file-input">
+             <button type="submit" name="action" class="upload-btn">
+             <i class="fas fa-user-edit"></i>&nbsp;<h4> Update</h4>
+          </button>
+       </div>
+     
+
+        <div class="upload-tag">
+           <input type="text" name="first_name" id="id_first_name" placeholder="First Name"  class="dark-mode-2 light-text border" />
+        </div> 
+
+         <div class="upload-tag">
+          <input type="text" name="last_name" id="id_last_name" placeholder="Last Name"  class="dark-mode-2 light-text border" />
+        </div> 
+
+         <div class="upload-tag">
+          <input type="text" name="location" id="id_location" placeholder="Your Airbnb Location"  class="dark-mode-2 light-text border" />        </div> 
+
+         <div class="upload-tag">
+           <input type="text" name="email" id="id_email" placeholder="Your Airbnb email"  class="dark-mode-2 light-text border" />
+        </div> 
+
+        
+  
+            <div class="caption">         
+            
+           <textarea
+            class="dark-mode-2 light-text border"
+              type="text" 
+              name="profile_info" 
+              id="id_profile_info" 
+              placeholder="Tell Airfam about yourself" 
+              maxlength=1500></textarea>
+
+
+        <style> 
+              textarea {
+                margin-top: 3rem;
+                margin-left: 4.5rem;
+                width: 105%;
+                height: 20rem;
+                padding: 12px 20px;
+                box-sizing: border-box;
+                border: 0.1rem  #eee;
+	              border-radius: 1.5rem;
+	              background-color: #d6e1e9;
+                font-size: 16px;
+                resize: none;
+                box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3);
+              }
+              textarea:focus{
+               background-color: #fff;
+               border: 0.1rem solid #00adb3;
+              }
+         </style>  
+
+
+
+
+
+
+             
+           <!--<input 
+              type="text" 
+              name="profile_info" 
+              id="id_profile_info" 
+              placeholder="Tell Airfam about your post!" 
+              class="dark-mode-2 light-text border"
+              />-->  
+
+
+
+
+
+
+          
+
+
+             
+         
+           
+
+              
+            </div>
+            
+        </div>
+    </form>
+ 
+
+          </div>
+        </div>
+
+
+        
+
+        
+
+
+
+
+
+
+  
+
+    
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+     <!-- <div class="feeds-content dark-mode-2">
+        <div class="feeds-header dark-mode-1">
+          <div class="header-top border">
+            <h4 style="margin-left: 5rem" class="light-text">Edit Profile</h4>
+          </div>
+          
+      
+       
+          <div class="header-post dark-mode-1 border">
+  
+               <form method="post" action="" enctype="multipart/form-data" role="form">
+               {% csrf_token %}
+        <div class="posts dark-mode-1">
+        
+         <div class="upload-picture">
+        <h2>Image</h2>
+         <i class="fas fa-image fa-w-14 fa-2x"></i>
+          <input type="file" name="picture" id="id_picture" class="custom-file-input">
+            
+       </div>
+
+      
+
+        <div class="upload-tag">
+          <input type="text" name="first_name" id="id_first_name" placeholder="First Name"  class="dark-mode-2 light-text border" />
+        </div>&nbsp;
+
+          <div class="upload-tag">  
+          <input type="text" name="last_name" id="id_last_name" placeholder="Last Name"  class="dark-mode-2 light-text border" />
+        </div>&nbsp;
+          <div class="upload-tag">   
+          <input type="text" name="location" id="id_location" placeholder="Your Airbnb Location"  class="dark-mode-2 light-text border" />
+        </div>&nbsp;
+         <div class="upload-tag"> 
+          <input type="text" name="email" id="id_email" placeholder="Your Airbnb email"  class="dark-mode-2 light-text border" />
+        </div>
+
+        
+  
+            <div class="caption">         
+            
+       
+             
+              <input 
+              type="text" 
+              name="profile_info" 
+              id="id_profile_info" 
+              placeholder="Tell Airfam about your post!" 
+              class="dark-mode-2 light-text border"
+              />
+
+
+
+
+
+
+          
+
+
+             
+          <button type="submit" name="action" class="upload-btn">
+            Upload
+          </button>
+
+              
+            </div>
+            
+        </div>
+    </form>
+
+
+          </div>
+        </div>
+
+        
+
+
+
+
+
+
+  
+
+    
+
+
+
+
+
+-->
+
+
+
+

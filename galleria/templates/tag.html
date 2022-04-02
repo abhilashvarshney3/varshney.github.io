@@ -1,0 +1,69 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+
+{% block content %}
+
+
+
+
+
+<!-- feeds content -->
+      <div class="feeds-content dark-mode-2">
+      
+        <div class="feeds-header dark-mode-1">
+          <div class="header-top border">
+            <h4 class="light-text">#{{ tag.title }}</h4>
+          </div>
+
+    {% for post in posts %}
+        <div class="posts dark-mode-1">
+          <div class="post border">
+            <div class="user-avatar">
+               {% if post.user.profile.picture %}
+                  <img src="{{ post.user.profile.picture.url }}" />
+                {% else %}
+                  <img src="{% static 'images/icon.12.png' %}" />
+                {% endif %}
+            </div>
+            <div class="post-content">
+              <div class="post-user-info light-text">
+                <h4>{% if post.user.profile.first_name %}{{ post.user.profile.first_name }}{% endif %}</h4>
+                <span>
+                <a style="text-decoration: none; color: #00adb3" href="{% url 'profile' post.user.username %}" >@{{ post.user.username }}</a> 
+                </span>
+              </div>
+
+              <div class="post-img">
+
+
+               
+
+              {% if post.content.first.file.name|slice:"-3:" == 'jpg' or post.content.first.file.name|slice:"-3:" == 'png' or post.content.first.file.name|slice:"-3:" == 'gif' %}
+
+                <a href="{{ post.get_absolute_url }}">
+                <img src=" {{ post.content.first.file.url }} " />
+                </a>
+
+              {% else %}  
+
+              <a href="{{ post.get_absolute_url }}">
+              <video width="480" height="300"  controls="controls" preload="metadata"  >
+              <source  src="{{ post.content.first.file.url }}#t=0.5" type="video/mp4">
+              </video>
+              </a>
+
+             {% endif %} 
+
+              </div>
+
+
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+             
+
+
+{% endblock %}

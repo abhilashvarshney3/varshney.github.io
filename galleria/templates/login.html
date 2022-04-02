@@ -1,0 +1,143 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href=" {% static './images/icon.12.png' %} " />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700&display=swap"
+      rel="stylesheet"
+    />
+     
+    <link rel="stylesheet" href="{% static 'CSS/landing.css' %}" />
+    <title>Galleria | Login</title>
+  </head>
+  <body>
+
+
+ <section class="main-page">
+      <!-- left -->
+      <div class="left">
+        <div class="left-content">
+          <div>
+            <i class="fas fa-compass"></i>
+            <h3 class="left-content-heading">Explore the talent of Airfam</h3>
+          </div>
+          <div>
+            <i class="fas fa-bullhorn"></i>
+            <h3 class="left-content-heading">
+              Get notifications about latest activities at Airbnb
+            </h3>
+          </div>
+          <div>
+            <i class="fas fa-users"></i>
+            <h3 class="left-content-heading">Connect with Airfam members across the globe</h3>
+          </div>
+        </div>
+      </div>
+<!-- end of left -->
+ <!-- right -->
+       
+      <div class="right">
+       {% if form.errors %}
+          <span style="color: #FF5A5F;
+                    display: flex;
+                    justify-content: center;  
+                    font-size: 1.5rem; 
+                    font-weight: bold;
+                    margin-top: 1rem;">Your username or password did not match. Please re-check and try again!</span>
+      {% endif %}
+      
+   
+
+        <form method="post" action="" role="form" class="right-content-form">
+
+
+        {% csrf_token %}
+
+      
+
+        <div class="form-control" style:"width: 20rem;
+                                        height: 4.5rem;
+  margin-right: 1rem;
+  font-size: 1.6rem;
+  padding: 0 1rem;
+  border: 0.1rem solid #ddd;
+  border-radius: 0.5rem;
+  background-color: #e6feff;
+  transition: background-color 0.3s; ">
+
+   
+            
+            <i class="fas fa-user fa-w-14 fa-2x"></i>
+            <input type="text" name="username" autofocus required id="id_username" placeholder="galleria username">
+      
+          </div>
+            
+            <div class="form-control" class="password" style:"display: flex; flex-direction: row">
+            <i class="fas fa-lock fa-w-14 fa-2x"></i>
+             <input type="password" name="password" id="id_password" placeholder="galleria password">
+             <label style="margin-left: 12rem;" for="forgot-password"><a style="text-decoration: none; right: 0%;" href='{% url 'password_reset' %}'>Forgot Password?</a></label>      
+            </div>
+            
+              <button type="submit" value="login" class="btn-top">Log in</button>
+                  
+
+        <input type="hidden" name="next" value="{{ next }}">
+
+      
+        </form>
+        <div class="middle-content">
+           <a style="width: 3rem; height: 3rem" href="{% url 'login' %}"><img  style="pointer: cursor; height: 3rem; width: 3rem;   " src="{% static 'images/icon.12.png' %}" /></a> <br>
+          <h1>Airbnb's own social media platform</h1>
+          <h4>Don't have a Galleria Account?</h4>
+          <button type="button" onclick="myFunction()" class="sign-up main-btn">Register Now!</button>
+            <script>
+                function myFunction() {
+                  location.replace("{% url 'signup' %}")
+                }
+            </script>
+            <div >
+       {% for message in messages %}
+          <p style="color: #00adb3;
+                    display: flex;
+                    justify-content: center;  
+                    font-size: 1.5rem; 
+                    font-weight: bold;
+                    margin-top: 3rem;
+                    ">
+                    {{message}}</p>
+        {% endfor %}
+       </div> 
+
+          
+        
+        </div>
+      </div>
+     
+      <!-- end of right -->
+      <!-- footer -->
+      <footer class="main-page-footer">
+        <ul>
+          <li><a href="{% url 'login' %}">&copy; 2021 Galleria</a></li>
+          <li><a href="#">About</a></li>
+          
+        </ul>
+      </footer>
+      <!-- end of footer -->
+    </section>
+    <!-- end of main page -->
+
+<script src="{% static 'JS/script.js' %}"></script>
+  </body>
+</html>

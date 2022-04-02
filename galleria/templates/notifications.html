@@ -1,0 +1,243 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+
+
+
+
+<!-- feeds content -->
+      <div class="feeds-content dark-mode-2">
+
+
+
+        <div  class="feeds-header dark-mode-1">
+          <div class="header-top border">
+            <h4 class="light-text">Notifications</h4>
+          </div>
+        </div>
+
+
+        <div class="posts dark-mode-1">
+        {% for notification in notifications %}
+    
+
+
+
+           {% if notification.notification_type == 2 %}
+           <div style=" box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3)" class="post border">
+            <div class="user-avatar">
+
+               {% if notification.sender.profile.picture %}
+              <img src="{{ notification.sender.profile.picture.url }}" />
+              {% else %}
+              <img src="{% static 'images/icon.12.png' %}" />
+            {% endif %}
+            </div>
+            <div class="post-content">
+              <div class="post-user-info light-text">
+               <h4>{% if notification.sender.profile.first_name %} {{ notification.sender.profile.first_name }}
+                {{ post_item.user.profile.last_name }}{% endif %}</h4>
+               
+                
+                <span>
+               <a style="text-decoration: none; color: #008489" href="{% url 'profile' notification.sender.username %}" > @{{ notification.sender.username }} <i class="fas fa-comment"></i></a>
+               
+                </span>
+                 
+                 
+              
+              </div>
+               <div  class="post-icons">
+               
+                <p class="post-text light-text">Commented   <time datetime="2016-1-1">
+                {{ notification.date|naturaltime }}
+                </time>
+                </p>
+                 <p style="word-wrap: break-word; width: 50%;" class="post-text light-text"> {{ notification.text_preview }}
+                </p>
+              
+                 <div style="margin-top: -9rem" class="notification-img">
+
+
+                  {% if notification.post.content.first.file.name|slice:"-3:" == 'jpg' or notification.post.content.first.file.name|slice:"-3:" == 'png' or notification.post.content.first.file.name|slice:"-3:" == 'gif' %}
+
+                <a href="{{ notification.post.get_absolute_url }}">
+                <img src=" {{ notification.post.content.first.file.url }} " />
+                </a>
+
+              {% else %}  
+
+              <a href="{{ notification.post.get_absolute_url }}">
+              <video width="160" height="100"  >
+              <source  src="{{ notification.post.content.first.file.url }}#t=0.5" type="video/mp4">
+              </video>
+              </a>
+
+             {% endif %} 
+
+                
+              </div>
+              
+            
+               
+              </div>
+              
+           
+             
+           
+             <a style="margin-left: 48rem; margin-top: -2rem; position: absolute" class="post-icons" href="{% url 'delete-notification' notification.id %}"><i class="fas fa-trash"></i></a>
+            </div>
+             
+          </div>
+          {% endif %}
+
+
+  
+
+
+       {% if notification.notification_type == 3 %}
+           <div style=" box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3)" class="post border">
+            <div class="user-avatar">
+
+               {% if notification.sender.profile.picture %}
+              <img src="{{ notification.sender.profile.picture.url }}" />
+              {% else %}
+              <img src="{% static 'images/icon.12.png' %}" />
+            {% endif %}
+            </div>
+            <div class="post-content">
+              <div class="post-user-info light-text">
+               <h4>{% if notification.sender.profile.first_name %} {{ notification.sender.profile.first_name }}
+                {{ post_item.user.profile.last_name }}{% endif %}</h4>
+               
+                
+                <span>
+                <a style="text-decoration: none; color: #008489" href="{% url 'profile' notification.sender.username %}" >@{{ notification.sender.username }} <i class="fas fa-user-plus"></i></a>
+               
+                </span>
+                 
+              
+              </div>
+               <div  class="post-icons">
+                <p class="post-text light-text">Started following you 
+                </p>
+              
+              <p class="post-text light-text">  
+                 <time datetime="2016-1-1">
+                {{ notification.date|naturaltime }}
+                </time>
+                </p>
+                 <a style="margin-left: 48rem; margin-top: -2rem; position: absolute" class="post-icons" href="{% url 'delete-notification' notification.id %}"><i class="fas fa-trash"></i></a>
+               
+              </div>
+            
+            
+            </div>
+             
+          </div>
+        {% endif %}
+
+
+
+
+  
+        {% if notification.notification_type == 1 %}
+           <div style=" box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3)" class="post border">
+            <div class="user-avatar">
+
+               {% if notification.sender.profile.picture %}
+              <img src="{{ notification.sender.profile.picture.url }}" />
+              {% else %}
+              <img src="{% static 'images/icon.12.png' %}" />
+            {% endif %}
+            </div>
+            <div class="post-content">
+              <div class="post-user-info light-text">
+               <h4>{% if notification.sender.profile.first_name %} {{ notification.sender.profile.first_name }}
+                {{ post_item.user.profile.last_name }}{% endif %}</h4>
+               
+                
+                <span>
+               <a style="text-decoration: none; color: #008489" href="{% url 'profile' notification.sender.username %}" > @{{ notification.sender.username }} <i class="fas fa-thumbs-up"></i></a>
+               
+                </span>
+                 
+              
+              </div>
+               <div  class="post-icons">
+                <p class="post-text light-text">Liked your post 
+                </p>
+              
+              <p class="post-text light-text">
+                 <time datetime="2016-1-1">
+                {{ notification.date|naturaltime }}
+                </time>
+                </p>
+                
+               
+              </div>
+              
+
+              
+             
+              <div class="notification-img">
+                 {% if notification.post.content.first.file.name|slice:"-3:" == 'jpg' or notification.post.content.first.file.name|slice:"-3:" == 'png' or notification.post.content.first.file.name|slice:"-3:" == 'gif' %}
+
+                <a href="{{ notification.post.get_absolute_url }}">
+                <img src=" {{ notification.post.content.first.file.url }} " />
+                </a>
+
+              {% else %}  
+
+              <a href="{{ notification.post.get_absolute_url }}">
+              <video   >
+              <source  src="{{ notification.post.content.first.file.url }}#t=0.5" type="video/mp4">
+              </video>
+              </a>
+
+             {% endif %} 
+
+                
+              </div>
+            
+             <a style="margin-left: 48rem; margin-top: -2rem; position: absolute" class="post-icons" href="{% url 'delete-notification' notification.id %}"><i class="fas fa-trash"></i></a>
+            </div>
+             
+          </div>
+          {% endif %}
+
+
+
+
+ {% endfor %}
+
+
+
+
+
+
+     
+  
+
+
+
+       
+
+
+
+
+
+
+
+
+      </div>
+      </div>
+
+             
+
+
+{% endblock %}

@@ -1,0 +1,238 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+
+
+
+
+<!-- feeds content -->
+      <div class="feeds-content dark-mode-2">
+        <div class="feeds-header dark-mode-1">
+          <div class="header-top border">
+            {% if url_name == 'profile' %}<h4 class="light-text">Posts:</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {% if user.is_authenticated and user == profile.user %}
+            <a class="tooltip" href="{% url 'profilefavorites' profile.user %}"><i class="fas fa-star"><span class="tooltiptext">Saved Posts</span></i></a>
+            {% endif %}
+            {%endif%}
+
+            {% if url_name == 'profilefavorites' %}<h4 class="light-text">Saved:</h4> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <a class="tooltip" href="{% url 'profile' profile.user %}"><i class="fas fa-user"><span class="tooltiptext">My Posts</span></i></a>
+           {%endif%}
+          </div>
+
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 14rem;
+  background-color: #008489;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 5px;
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+</style> 
+
+
+        <div class="posts dark-mode-1">
+        {% for post in posts %}
+          <div class="post border">
+            <div class="user-avatar">
+               {% if post.user.profile.picture %}
+                  <img src="{{ post.user.profile.picture.url }}" />
+                {% else %}
+                  <img src="{% static 'images/icon.12.png' %}" />
+                {% endif %}
+            </div>
+            <div class="post-content">
+              <div class="post-user-info light-text">
+                <h4>{% if post.user.profile.first_name %}{{ post.user.profile.first_name }}{% endif %}</h4>
+              
+                <span>
+                @{{ post.user.username }} 
+               
+                </span>
+                
+              </div>
+              
+
+               <p class="post-text light-text">Posted:
+                 <time datetime="2016-1-1">
+                {{ post.posted|naturaltime }}
+                </time>
+                </p>
+               <p class="post-text light-text">
+                {% for tag in post.tags.all %}<a style="text-decoration: none; color: #00adb3;" href="{{ tag.get_absolute_url }}" >{{ tag }}</a>{% endfor %}
+                </p>
+              <p class="post-text light-text">
+                {{ post.caption }}
+              </p>
+
+
+
+              <div class="post-img">
+
+
+
+              
+
+            {% if post.content.first.file.name|slice:"-3:" == 'jpg' or post.content.first.file.name|slice:"-3:" == 'png' or post.content.first.file.name|slice:"-3:" == 'gif' %}
+
+                <a href="{{ post.get_absolute_url }}">
+                <img src=" {{ post.content.first.file.url }} " />
+                </a>
+
+              {% else %}  
+
+              <a href="{{ post.get_absolute_url }}">
+              <video width="480" height="300"  controls="controls" preload="metadata"  >
+              <source  src="{{ post.content.first.file.url }}#t=0.5" type="video/mp4">
+              </video>
+              </a>
+
+             {% endif %} 
+
+
+
+
+
+              </div>
+
+
+
+
+
+              <div class="post-icons">
+
+                <a href="{% url 'postdetails' post.id %}"><i class="fas fa-comment-dots"></i></a>
+
+                
+                <a href="{% url 'postlike' post.id %}"><i class="fas fa-heart"> {{ post.likes }} likes</i></a>
+                
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+
+
+
+<div class="follow dark-mode-1">
+        <div>
+          <div class="follow-user border">
+            <div class="follow-user-img">
+            {% if profile.picture %}
+              <img src="{{ profile.picture.url }}" />
+              {% else %}
+              <img src="{% static 'images/icon.12.png' %}" />
+            {% endif %} 
+            </div>
+            <div class="follow-user-info light-text">
+             <h4>{% if profile.first_name %}{{ profile.first_name }}
+            {{ profile.last_name }}{% endif %}</h4>
+              <p>@{{ profile.user }}</p> 
+            </div> &nbsp;
+             <div class="follow-user border">
+             {% if user.is_authenticated and user != profile.user %}
+              {% if follow_status == True%}
+                <a href="{% url 'follow' profile.user 0 %}"><button type="button" class="unfollow-btn dark-mode-2">Unfollow</button></a>
+              {% else %}
+                <a href="{% url 'follow' profile.user 1 %}"><button type="button" class="follow-btn dark-mode-2">Follow</button></a>
+              {% endif %}
+
+               
+            {% endif %}
+            </div>
+            
+          </div>
+
+           <div class="follow-user border">
+             <div class="following light-text">
+          
+            <p class="following-paragraph"><span style=" font-size: 2rem; color: #00adb3">{{ posts_count }}</span> Posts</p>           
+          </div>
+
+          <div class="following light-text">
+            <p class="following-paragraph"><span style=" font-size: 2rem; color: #00adb3">{{ following_count }}</span> Following</p>
+            <p class="following-paragraph"><span style=" font-size: 2rem; color: #00adb3">{{ followers_count }}</span> Followers</p>
+           
+          </div>
+          
+          </div>
+
+           
+          <div class="about light-text">
+          <p style=" font-size: 2rem; color: #00adb3" class="about-paragraph">Location:</p>&nbsp;&nbsp;
+            <p class="following-paragraph">{% if profile.location %}
+            {{ profile.location }} {% endif %} </p>
+          </div>
+
+           <div class="about light-text">
+             <p style=" font-size: 2rem; color: #00adb3" class="about-paragraph">Email:</p>&nbsp;&nbsp;
+            <p class="about-paragraph">{% if profile.email %}
+            {{ profile.email }} {% endif %} </p>
+          </div>
+           
+             <div class="about light-text">
+             <p style=" font-size: 2rem; color: #00adb3" class="about-paragraph">Bio:</p>&nbsp;&nbsp;
+            <p class="about-paragraph">{% if profile.profile_info %}
+            {{ profile.profile_info }} {% endif %} </p>
+          </div>
+           
+       
+          
+          
+         <div class="follow-link">
+            {% if user.is_authenticated and user == profile.user %}
+            <a href="{% url 'edit-profile'%}"><i class="fas fa-user-edit"></i> Edit Profile</a>
+            {% endif %}  
+          </div> 
+
+
+           <div class="follow-link">
+           {% if user.is_authenticated and user != profile.user %}
+            <a class="post-icons" href="{% url 'newconversation' profile.user.username %}"><i class="fas fa-envelope">  Message</i></a>
+            {% endif %}  
+          </div> 
+
+
+
+         
+        </div>
+      </div>
+
+             
+
+
+{% endblock %}

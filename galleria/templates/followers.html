@@ -1,0 +1,102 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+
+
+
+
+<!-- feeds content -->
+      <div class="feeds-content dark-mode-2">
+
+
+
+        <div  class="feeds-header dark-mode-1">
+          <div class="header-top border">
+            <h4 class="light-text">Notifications</h4>
+          </div>
+        </div>
+
+
+        <div class="posts dark-mode-1">
+        {% for notification in notifications %}
+    
+
+
+
+         
+
+
+  
+
+
+       {% if notification.notification_type == 3 %}
+           <div style=" box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3)" class="post border">
+            <div class="user-avatar">
+
+               {% if notification.sender.profile.picture %}
+              <img src="{{ notification.sender.profile.picture.url }}" />
+              {% else %}
+              <img src="{% static 'images/icon.12.png' %}" />
+            {% endif %}
+            </div>
+            <div class="post-content">
+              <div class="post-user-info light-text">
+               <h4>{% if notification.sender.profile.first_name %} {{ notification.sender.profile.first_name }}
+                {{ notification.sender.profile.last_name }}{% endif %}</h4>
+               
+                
+                <span>
+                <a style="text-decoration: none; color: #008489" href="{% url 'profile' notification.sender.username %}" >@{{ notification.sender.username }} <i class="fas fa-user-plus"></i></a>
+               
+                </span>
+                 
+              
+              </div>
+               
+            
+            
+            </div>
+             
+          </div>
+        {% endif %}
+
+
+
+
+  
+
+
+
+
+ {% endfor %}
+
+
+
+
+
+
+     
+  
+
+
+
+       
+
+
+
+
+
+
+
+
+      </div>
+      </div>
+
+             
+
+
+{% endblock %}
